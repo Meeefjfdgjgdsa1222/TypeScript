@@ -498,6 +498,10 @@ export interface ProjectInfoRequestArgs extends FileRequestArgs {
      * Indicate if the file name list of the project is needed
      */
     needFileNameList: boolean;
+    /**
+     * if true returns details about default configured project calculation
+     */
+    needDefaultConfiguredProjectInfo?: boolean;
 }
 
 /**
@@ -526,6 +530,20 @@ export interface CompilerOptionsDiagnosticsRequestArgs {
 }
 
 /**
+ * Details about the default project for the file
+ */
+export interface DefaultConfiguredProjectInfo {
+    /** List of config files looked and did not match because file was not part of root file names */
+    notMatchedByConfig?: readonly string[];
+    /** List of projects which were loaded but file was not part of the project */
+    notInProject?: readonly string[];
+    /** List of projects where file was present in project but its a file from referenced project */
+    inProjectWithReference?: readonly string[];
+    /** Configured project used as default */
+    defaultProject?: string;
+}
+
+/**
  * Response message body for "projectInfo" request
  */
 export interface ProjectInfo {
@@ -542,6 +560,10 @@ export interface ProjectInfo {
      * Indicates if the project has a active language service instance
      */
     languageServiceDisabled?: boolean;
+    /**
+     * Information about default project
+     */
+    configuredProjectInfo?: DefaultConfiguredProjectInfo;
 }
 
 /**
